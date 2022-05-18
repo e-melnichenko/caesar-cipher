@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class App {
     static final char[] alphabet = "абвгдеёжзийклмнопрстуфхцшщъыьэюя.,”:-!?\s".toCharArray();
     static final HashMap<Character, Integer> hashMap = new HashMap<>();
-    static String text = "Привет! как ты?";
+    static String text = "Привет! как ты **?";
     static int offset = 60;
 
     public static void main(String[] args) {
@@ -34,8 +34,11 @@ public class App {
         StringBuilder builder = new StringBuilder();
 
         for (int i = 0; i < text.length(); i++) {
-            char currentChar = text.charAt(i);
-            int charIndexWithOffset = (hashMap.get(Character.toLowerCase(currentChar)) + offset) % alphabet.length;
+            char currentChar = Character.toLowerCase(text.charAt(i));
+
+            if(!hashMap.containsKey(currentChar)) continue;
+
+            int charIndexWithOffset = (hashMap.get(currentChar) + offset) % alphabet.length;
             builder.append(alphabet[charIndexWithOffset]);
         }
 
